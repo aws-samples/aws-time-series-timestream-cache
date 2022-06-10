@@ -83,7 +83,7 @@ export class TimeSeriesStack extends Stack {
 
     tsTable.addDependsOn(tsDB);
 
-    // TODO: CDK has a limitation where you cannot create encrypted SSM keys.
+    // CDK has a limitation where you cannot create encrypted SSM keys.
     // It's highly recommended that you create the key manually in console and reference it here instead.
     const cacheApiSSMKey = new ssm.StringParameter(this, "APICacheSSMKey", {
       allowedPattern: ".*",
@@ -131,7 +131,7 @@ export class TimeSeriesStack extends Stack {
 
     timeSeriesLambda.addToRolePolicy(lambdaTimestreamPolicy);
 
-    // TODO: CDK has a limitation where you cannot create encrypted SSM keys.
+    // CDK has a limitation where you cannot create encrypted SSM keys.
     // If using this method of auth for API Gateway
     // It's highly recommended that you create the key manually in console and reference it here instead.
     const apiGWSSMKey = new ssm.StringParameter(this, "APIAccessSSMKey", {
@@ -176,7 +176,7 @@ export class TimeSeriesStack extends Stack {
       defaultIntegration: new LambdaIntegration(apiLambda),
 
       // "false" will require explicitly adding methods on the `proxy` resource
-      anyMethod: true, // TODO restrict to GET
+      anyMethod: true,
     });
 
     timeSeriesTable.grantReadData(apiLambda);

@@ -1,8 +1,15 @@
 # Time series cache with Amazon Timestream
 
-Tech: Amazon Timestream, Amazon DynamoDB, Amazon SQS, AWS Lambda, AWS Systems Manager, Amazon API Gateway.
-
 This project is an example of a time series caching service that stores historical and future data from a source into Amazon DynamoDB and Amazon Timestream. The data is then either accessed internally or exposed via an example API.
+
+Tech:
+
+- Amazon Timestream
+- Amazon DynamoDB
+- Amazon SQS
+- AWS Lambda
+- AWS Systems Manager
+- Amazon API Gateway.
 
 ## Solution Architecture
 
@@ -41,22 +48,32 @@ This project is an example of a time series caching service that stores historic
 
 ### Standing up:
 
-From the root of the repository once you have authenticated your aws cli session and confirmed docker is running:
+First:
+
+- Ensure docker engine is running
+- Authenticate your shell session with your desired AWS account and region.
+
+_Note: ensure the region you are deploying to supports Timestream._
+
+Then run:
 
 ```
 yarn
 cdk deploy
 ```
 
-_Note: ensure the region you are deploying to supports Timestream._
-
 This may take around 5-10 minutes to deploy initially. Other updates will be faster.
 
 ### Hydration and testing
 
-Running the below script from root should test the whole solution once it's stood up to make sure everything connected properly. It will add an identifier to the ID table and kick off the lambda. Then it will check the API to see if the data is hydrated properly. If everything goes well it should take less than a second to hydrate through the system.
+Running the below script from root should test the whole solution once it's stood up to make sure everything connected properly.
 
-Some of these are default values. Will need to add the table name and API route. If you have changed any other values update them as needed also.
+1. It will add an identifier to the ID table and kick off the lambda.
+2. It will check the API to see if the data is hydrated properly.
+
+If everything goes well, it should take less than a second to hydrate through the system.
+
+Some of these are default values. You will need to add the table name and API route. If you have changed any other values update them as needed also.
 
 ```bash
 API_ENDPOINT=https://yourendpoint/prod/ \
@@ -79,7 +96,7 @@ If there is a error then hopefully there should be enough information to debug t
 
 ### The way the lambdas are structured
 
-In this sample repository the lambdas do not have their own package.json or node_modules, this will cause the created lambdas to include the top-level node_modules. This isn't a problem for this particular solution but eventually that package may be too large even for lambda. You can fix that by adding in a package.json for each lambda and generating a node_modules.
+In this sample repository the lambdas do not have their own `package.json` or `node_modules`, this will cause the created lambdas to include the top-level `node_modules`. This isn't a problem for this particular solution but eventually that package may be too large even for lambda. You can fix that by adding in a `package.json` for each lambda and generating a `node_modules`.
 
 ### API Gateway implementation
 

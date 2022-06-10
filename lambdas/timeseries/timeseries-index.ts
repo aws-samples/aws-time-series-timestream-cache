@@ -126,7 +126,7 @@ interface APIResponseRecord {
   metadata: string;
 }
 
-// TODO: replace this with an api call instead. This just generates dummy data.
+// Replace this with an api call instead. This just generates dummy data. For sample purposes.
 export const spoofRecords = (identifier: string): APIResponseRecord[] => {
   const records: APIResponseRecord[] = [];
   const now = Math.round(Date.now() / 1000);
